@@ -58,7 +58,7 @@ print("connected!")
 
 for i in allcourses:
     try:
-        sql_script=f'''CREATE TABLE {i}
+        sql_script=f'''CREATE TABLE IF NOT EXISTS {i}
             (
             id INTEGER NOT NULL PRIMARY KEY,
             uNumber char (25)
@@ -70,19 +70,18 @@ for i in allcourses:
     except:
         print("nope")    
     
-print(allcourses)
 print("Tables are Ready")
 
+for i in allcourses:
 
- # Getting all tables from sqlite_master
-sql_query = """SELECT name FROM sqlite_master
-    WHERE type='table';"""
-     
-# executing our sql query
-cur.execute(sql_query)
-print("List of tables\n")
-     
-# printing all tables list
-print(cur.fetchall())
+    try:
+        filename=f'''{i}.py'''
+        writeFile = open(filename, 'x')
+        writeFile.write(f'''{i}''')
+        writeFile.close()
+
+    except:
+        print("nope")  
+
 
 conn.close()
